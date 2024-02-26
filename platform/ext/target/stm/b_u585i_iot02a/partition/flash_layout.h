@@ -29,17 +29,17 @@
  */
  /* Flash layout for b_u585i_iot02a  with BL2 (multiple image boot):
  *
- * 0x0000_0000 SCRATCH (64KB)
- * 0x0001_0000 BL2 - counters(16 KB)
- * 0x0001_4000 BL2 - MCUBoot (84 KB)
- * 0x0002_7000 OTP Write Protect (4KB)
- * 0x0002_8000 NV counters area (16 KB)
- * 0x0002_c000 Secure Storage Area (16 KB)
- * 0x0003_0000 Internal Trusted Storage Area (16 KB)
- * 0x0003_8000 Secure image     primary slot (384 KB)
- * 0x0009_8000 Non-secure image primary slot (512 KB)
- * 0x0011_8000 Secure image     secondary slot (384 KB)
- * 0x0017_8000 Non-secure image secondary slot (512 KB)
+ * 0x0000_0000 SCRATCH                          (64KB)      0x10000
+ * 0x0001_0000 BL2 - counters                   (16 KB)     0x04000
+ * 0x0001_4000 BL2 - MCUBoot                    (124 KB)    0x1F000
+ * 0x0003_3000 OTP Write Protect                (4KB)       0x01000
+ * 0x0002_E000 NV counters area                 (16 KB)     0x04000
+ * 0x0003_2000 Secure Storage Area              (16 KB)     0x04000
+ * 0x0003_6000 Internal Trusted Storage Area    (16 KB)     0x04000
+ * 0x0003_A000 Secure image     primary slot    (256 KB)    0x40000
+ * 0x0007_A000 Non-secure image primary slot    (640 KB)    0xA0000
+ * 0x0011_A000 Secure image     secondary slot  (256 KB)    0x40000
+ * 0x0015_A000 Non-secure image secondary slot  (640 KB)    0xA0000
  *
  * Bl2 binary is written at 0x1_2000:
  * it contains bl2_counter init value, OTP write protect, NV counters area init.
@@ -83,7 +83,7 @@
 
 /* area for BL2 code protected by hdp */
 #define FLASH_AREA_BL2_OFFSET           (FLASH_AREA_PERSO_OFFSET+FLASH_AREA_PERSO_SIZE )
-#define FLASH_AREA_BL2_SIZE             (0x16000)
+#define FLASH_AREA_BL2_SIZE             (0x18000)
 /* HDP area end at this address */
 #define FLASH_BL2_HDP_END               (FLASH_AREA_BL2_OFFSET+FLASH_AREA_BL2_SIZE-1)
 /* area for BL2 code not protected by hdp */
@@ -123,8 +123,8 @@
 #error "FLASH_ITS_AREA_OFFSET not aligned on FLASH_AREA_IMAGE_SECTOR_SIZE"
 #endif /*  (FLASH_ITS_AREA_OFFSET % FLASH_AREA_IMAGE_SECTOR_SIZE) != 0 */
 
-#define FLASH_S_PARTITION_SIZE          (0x60000) /* 384 KB for S partition */
-#define FLASH_NS_PARTITION_SIZE         (0x80000) /* 512 KB for NS partition */
+#define FLASH_S_PARTITION_SIZE          (0x40000) /* 384 KB for S partition */
+#define FLASH_NS_PARTITION_SIZE         (0xA0000) /* 512 KB for NS partition */
 
 #define FLASH_PARTITION_SIZE            (FLASH_S_PARTITION_SIZE+FLASH_NS_PARTITION_SIZE)
 
